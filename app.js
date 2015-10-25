@@ -13,7 +13,11 @@ $(function () {
 			event.clipboardData.setData('text/plain', viewmodel.output);
 		});
 	});
-
+	clipboard.on('error', function (event) {
+		$(".update-button").click(function () {
+			viewmodel.update(false);
+		});
+	});
 	viewmodel.update(false);
 });
 // ViewModel for Knockout (ES5)
@@ -44,7 +48,9 @@ function ViewModel() {
 			_self.format = e.data("template");
 		});
 	});
-	_self.update = function(showCopiedMessage) {
+	_self.update = function (showCopiedMessage) {
+		showCopiedMessage = showCopiedMessage === true;
+
 		var expander = new natori.Expander(_self.format, new Date());
 		var result = expander.expand();
 		_self.output = result;

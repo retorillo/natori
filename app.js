@@ -1,8 +1,20 @@
 /*! app.js (natori) / Copyright (c) 2015 Retorillo */
+
+var viewmodel, clipboard;
 $(function () {
-	var viewmodel = new ViewModel();
+	viewmodel = new ViewModel();
 	ko.applyBindings(viewmodel);
+
 	ZeroClipboard.config({ swfPath: "./zeroclipboard.swf" });
+	clipboard = new ZeroClipboard($('.update-button'));
+	clipboard.on('ready', function (event) {
+		clipboard.on('copy', function (event) {
+			viewmodel.update(true);
+			event.clipboardData.setData('text/plain', viewmodel.output);
+		});
+	});
+
+	viewmodel.update(false);
 });
 // ViewModel for Knockout (ES5)
 function ViewModel() {
@@ -32,7 +44,7 @@ function ViewModel() {
 			_self.format = e.data("template");
 		});
 	});
-	_self.update = function() {
+	_self.update = function(showCopiedMessage) {
 		var expander = new natori.Expander(_self.format, new Date());
 		var result = expander.expand();
 		_self.output = result;
@@ -45,14 +57,12 @@ function ViewModel() {
 
 		var copiedMessage = $('.copied-msg').clone();
 		$('.copied-msg').remove();
-		copiedMessage.text(this.literals.copiedMsg);
+		if (showCopiedMessage)
+			copiedMessage.text(this.literals.copiedMsg);
+		else
+			copiedMessage.text('');
 		copiedMessage.appendTo('.copied-msg-root');
-
-		ZeroClipboard.setData("text/plain", _self.output);
-		if (clipboardData)
-			clipboardData.setData("Text", _self.output);
 	};
-	_self.update();
 }
 
 var literals = {};

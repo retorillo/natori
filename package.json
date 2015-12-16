@@ -1,0 +1,19 @@
+{
+  "name": "natori",
+  "version": "0.9.0",
+  "description": "",
+  "main": "natori.js",
+  "scripts": {
+    "test": "node example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/retorillo/natori.git"
+  },
+  "author": "Retorillo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/retorillo/natori/issues"
+  },
+  "homepage": "https://github.com/retorillo/natori#readme"
+}

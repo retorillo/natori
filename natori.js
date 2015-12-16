@@ -1,6 +1,8 @@
 /*! natori.js / The MIT Lisence (MIT) / Copyright (c) 2015 Retorill */
-var natori = {} || natori;
-natori.Expander = function (undefined) {
+module.exports = {
+	Expander: getExpander(),
+}
+function getExpander(undefined) {
 	var max_depth = 1024;
 	var wlist = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 	var alist = "abcdefghijklmnopqrstuvwxyz";
@@ -84,4 +86,4 @@ natori.Expander = function (undefined) {
 		}
 	}
 	return Expander;
-}();
+}
